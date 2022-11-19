@@ -118,6 +118,6 @@ app.patch('/stores/:id', checkToken, async (req, res) => {
     }
 });
 
-const port = 2000;
+const port = process.env.PORT;
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
