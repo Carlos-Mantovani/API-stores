@@ -83,7 +83,7 @@ app.post('/register', async (req, res) => {
 
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
-    const user = await StoreModel.findOne({ email: email });
+    const store = await StoreModel.findOne({ email: email });
     if (store) {
         const passwordMatch = await bcrypt.compare(password, store.password);
         if (passwordMatch) {
