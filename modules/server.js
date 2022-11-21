@@ -126,6 +126,20 @@ app.patch('/stores/:id', checkToken, async (req, res) => {
     }
 });
 
+app.delete('/stores/:id', checkToken, async (req, res) => {
+    try {
+        const id = req.params.id;
+        const index = req.body.index;
+        const store = await StoreModel.findById(id);
+        const updatedProducts = store.products.splice(index, 1);
+        req.body.products = updatedProducts;
+        const updatedStore = await StoreModel.findByIdAndUpdate(id, req.body, { new: true });
+        res.status(200).json(updatedStore);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+})
+
 const port = process.env.PORT;
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
