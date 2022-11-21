@@ -47,7 +47,7 @@ app.get('/stores', async (req, res) => {
 
 app.get('/stores/:id', checkToken, async (req, res) => {
     const id = req.params.id;
-    const store = await UserModel.findById(id, '-password');
+    const store = await StoreModel.findById(id, '-password');
     if (store) {
         return res.status(200).json(store);
     }
@@ -71,7 +71,8 @@ app.post('/register', async (req, res) => {
         phone,
         cnpj,
         cep,
-        type
+        type,
+        products: []
     });
     try {
         await store.save();
@@ -106,6 +107,13 @@ app.patch('/stores/:id', checkToken, async (req, res) => {
     try {
         const id = req.params.id;
         const password = req.body.password;
+        const bodyProducts = req.body.products;
+        if (bodyProducts) {
+            const store = await StoreModel.findById(id);
+            const products = store.products;
+            const updatedProducts = products.concat(bodyProducts);
+            req.body.products = updatedProducts;
+        }
         const store = await StoreModel.findByIdAndUpdate(id, req.body, { new: true });
         if (password) {
             const salt = await bcrypt.genSalt(12);
