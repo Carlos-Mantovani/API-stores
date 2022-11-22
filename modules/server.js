@@ -126,7 +126,7 @@ app.patch('/stores/:id', /*checkToken,*/ async (req, res) => {
     }
 });
 
-app.delete('/stores/:id', checkToken, async (req, res) => {
+app.delete('/stores/:id', /*checkToken,*/ async (req, res) => {
     try {
         const id = req.params.id;
         const index = req.body.index;
