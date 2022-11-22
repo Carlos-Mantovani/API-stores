@@ -45,9 +45,9 @@ app.get('/stores', async (req, res) => {
     }
 });
 
-app.get('/stores/:id', checkToken, async (req, res) => {
+app.get('/stores/:id', /*checkToken,*/ async (req, res) => {
     const id = req.params.id;
-    const store = await StoreModel.findById(id, '-password');
+    const store = await StoreModel.findById(id, '-password, -type');
     if (store) {
         return res.status(200).json(store);
     }
@@ -56,7 +56,7 @@ app.get('/stores/:id', checkToken, async (req, res) => {
 
 app.post('/register', async (req, res) => {
 
-    const { name, email, password, address, phone, cnpj, cep, type } = req.body
+    const { name, email, password, address, phone, cnpj, cep, type } = req.body;
     const storeExist = await StoreModel.findOne({ email: email });
     if (storeExist) {
         return res.status(422).send('Loja com esse e-mail já está cadastrado');
@@ -103,7 +103,7 @@ app.post('/login', async (req, res) => {
     res.status(404).send("Loja não existe!");
 });
 
-app.patch('/stores/:id', checkToken, async (req, res) => {
+app.patch('/stores/:id', /*checkToken,*/ async (req, res) => {
     try {
         const id = req.params.id;
         const password = req.body.password;
