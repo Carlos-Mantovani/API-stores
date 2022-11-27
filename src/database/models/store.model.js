@@ -36,6 +36,10 @@ const storeSchema = new mongoose.Schema({
     products: {
         type: Array,
         required: true
+    },
+    image: {
+        type: String,
+        required: false
     }
 });
 

@@ -72,7 +72,8 @@ app.post('/register', async (req, res) => {
         cnpj,
         cep,
         type,
-        products: []
+        products: [],
+        image
     });
     try {
         await store.save();
@@ -126,6 +127,7 @@ app.patch('/stores/:id', /*checkToken,*/ async (req, res) => {
     }
 });
 
+//Fix this
 app.delete('/stores/:id', /*checkToken,*/ async (req, res) => {
     try {
         const id = req.params.id;
